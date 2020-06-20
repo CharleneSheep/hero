@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+  <meta charset="utf-8">
+  <title>Sign in &laquo; Admin</title>
+  <link rel="stylesheet" href="/styles/bootstrap.css">
+  <link rel="stylesheet" href="/styles/admin.css">
+</head>
+
+<body>
+  <div class="login">
+    <form class="login-wrap" id="form">
+      <img class="avatar" src="/images/default.png">
+      <!-- 有错误信息时展示 -->
+      <div class="alert alert-danger hidden">
+        <strong>错误！</strong><span></span>
+      </div>
+      <div class="form-group">
+        <label for="userName" class="sr-only">用户名</label>
+        <input id="userName" name="userName" type="userName" class="form-control" placeholder="用户名" value="" autofocus>
+      </div>
+      <div class="form-group">
+        <label for="password" class="sr-only">密码</label>
+        <input id="password" name="password" type="password" class="form-control" value="" placeholder="密码">
+      </div>
+      <input id="btn" type="button" class="btn btn-primary btn-block" value="登 录">
+    </form>
+  </div>
+</body>
+<script src="/js/jquery.js"></script>
+<script>
+  $('#btn').on('click', function () {
+    // FormData()是以二进制的形式上传(有传文件的时候用它)
+    //serialize()可以直接传递表单的对象格式
+    let data = $('#form').serialize()
+    $.ajax({
+      url: 'http://127.0.0.1:3002/doLogin',
+      //serialize有自己的编码格式所以要把jq的ajax默认设置的设置false,避免冲突
+      processData: false,
+      data,
+      success: function (res) {
+        if (res.code != 200) {
+          alert(res.msg);
+        } else {
+          alert(res.msg);
+          location.href = 'index.html'
+        }
+      }
+    })
+  })
+</script>
+
+</html>
